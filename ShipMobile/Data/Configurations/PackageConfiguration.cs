@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShipMobile.Data.Models;
 
 namespace ShipMobile.Data.Configurations
@@ -13,7 +14,7 @@ namespace ShipMobile.Data.Configurations
 
 
             builder.Property(x => x.PackageType)
-                .HasConversion<string>();
+                .HasConversion(new EnumToStringConverter<PackageType>());
 
             builder.HasIndex(x => x.Token).IsUnique();
         }

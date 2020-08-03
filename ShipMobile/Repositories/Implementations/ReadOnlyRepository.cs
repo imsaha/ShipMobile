@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ShipMobile.Repositories.Implementations
 {
-    public class ReadOnlyRepository<TEntity>:IReadOnlyRepository<TEntity> where TEntity:class
+    public class ReadOnlyRepository<TEntity> : IReadOnlyRepository<TEntity> where TEntity : class
     {
         internal protected readonly DbContext Context;
         bool disposed;
@@ -21,7 +21,7 @@ namespace ShipMobile.Repositories.Implementations
             query = dbContext.Set<TEntity>();
         }
 
-        public IQueryable<TEntity> OpenQuery() => query= query.AsNoTracking();
+        public IQueryable<TEntity> OpenQuery() => query = query.AsNoTracking();
 
         #region Helpers
 

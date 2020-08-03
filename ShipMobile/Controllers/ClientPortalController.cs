@@ -86,9 +86,8 @@ namespace ShipMobile.Controllers
 
             foreach (var item in request.Tokens)
             {
-                var userId = User.GetUserId();
                 var query = packageRepository.OpenQuery()
-                .Where(x => x.Token == item && x.AgentId == userId);
+                .Where(x => x.Token == item && x.AgentId == User.GetUserId());
 
                 var package = await query.FirstOrDefaultAsync();
                 if (package != null)
