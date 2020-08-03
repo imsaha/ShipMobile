@@ -1,0 +1,93 @@
+﻿@page
+@model ShipMobile.Areas.Admin.Pages.Associates.IndexModel
+@{
+    ViewData["Title"] = "Associates";
+}
+
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+
+
+
+<div class="card">
+
+    <div class="card-header">
+            <ul class="nav nav-pills card-header-pills">
+                <li class="nav-item">
+                    <a asp-page="Index" class="nav-link active">Associates</a>
+                </li>
+
+                <li class="nav-item">
+                    <a asp-page="Create" class="nav-link">
+                        <i class="fa fa-plus"></i>
+                        Add new
+                    </a>
+                </li>
+            </ul>
+    </div>
+
+    <div class="card-body p-0 table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Mobile</th>
+                    <th>Role</th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @if (Model.Users != null && Model.Users.Count>0)
+                {
+                    foreach (var item in Model.Users)
+                    {
+                        <tr>
+                            <td>@($"{item.FirstName} {item.LastName}".Trim())</td>
+                            <td>
+                                <span>@item.Email</span>
+                                @if (!string.IsNullOrEmpty(item.Email))
+                                {
+                                    <i class="fa fa-@(item.EmailConfirmed?"check":"exclamation-triangle") text-black-50"></i>
+                                }
+                            </td>
+                            <td>
+                                <span>@item.Mobile</span>
+                                @if (!string.IsNullOrEmpty(item.Mobile))
+                                {
+                                    <i class="fa fa-@(item.MobileConfirmed?"check":"exclamation-triangle") text-black-50"></i>
+                                }
+                            </td>
+                            <td>@item.Role</td>
+                            <td>
+                                <a asp-page="Create" asp-route-Id="@item.Id">Edit</a>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="5">
+                            <div class="text-center">
+                                No item exist, <a asp-page="Create">Create new</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+

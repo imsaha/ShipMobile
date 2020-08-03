@@ -1,0 +1,92 @@
+﻿@page "{Id?}"
+@model ShipMobile.Areas.Admin.Pages.Associates.CreateModel
+@{
+    ViewData["Title"] = "Add new";
+}
+
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+
+
+
+    <div class="card">
+
+
+        <div class="card-header">
+            <ul class="nav nav-pills card-header-pills">
+                <li class="nav-item">
+                    <a asp-page="Index" class="nav-link">Associates</a>
+                </li>
+
+                <li class="nav-item">
+                    <a asp-page="Create" asp-route-Id="" class="nav-link active">
+                        <i class="fa fa-plus"></i>
+                        Add new
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-3 col-12"></div>
+                <div class="col-sm-6 col-12">
+
+                    <form method="post">
+
+                        <div class="form-group">
+                            <label asp-for="CreateAssociate.FirstName"></label>
+                            <input asp-for="CreateAssociate.FirstName" class="form-control" />
+                            <span asp-validation-for="CreateAssociate.FirstName" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="CreateAssociate.LastName"></label>
+                            <input asp-for="CreateAssociate.LastName" class="form-control" />
+                            <span asp-validation-for="CreateAssociate.LastName" class="text-danger"></span>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label asp-for="CreateAssociate.Mobile"></label>
+                            <input asp-for="CreateAssociate.Mobile" class="form-control" />
+                            <span asp-validation-for="CreateAssociate.Mobile" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="CreateAssociate.Email"></label>
+                            @if (Model.Id > 0)
+                            {
+                                <input asp-for="CreateAssociate.Email" class="form-control" disabled readonly />
+                            }
+                            else
+                            {
+                                <input asp-for="CreateAssociate.Email" class="form-control" />
+                            }
+                            <span asp-validation-for="CreateAssociate.Email" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="CreateAssociate.Password"></label>
+                            <input asp-for="CreateAssociate.Password" class="form-control" />
+                            <span asp-validation-for="CreateAssociate.Password" class="text-danger"></span>
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <button class="btn btn-primary">Save</button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+                <div class="col-sm-3 col-12"></div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+

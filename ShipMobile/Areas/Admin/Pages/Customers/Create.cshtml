@@ -1,0 +1,82 @@
+﻿@page "{Id?}"
+@model ShipMobile.Areas.Admin.Pages.Customers.CreateModel
+@{
+    var title = Model.Id > 0 ? "Update customer" : "Add new";
+    ViewData["Title"] = title;
+}
+
+
+
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+
+
+
+<div class="card">
+
+
+    <div class="card-header">
+        <ul class="nav nav-pills card-header-pills">
+            <li class="nav-item">
+                <a asp-page="Index" class="nav-link">Customers</a>
+            </li>
+
+            <li class="nav-item">
+                <a asp-page="Create" asp-route-Id="" class="nav-link active">
+                    <i class="fa fa-plus"></i> Add new
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="card-body">
+
+        <div class="row">
+
+            <div class="col-sm-3 col-12"></div>
+            <div class="col-sm-6 col-12">
+
+                <form method="post">
+
+                    <div class="form-group">
+                        <label asp-for="CreateCustomer.FirstName"></label>
+                        <input asp-for="CreateCustomer.FirstName" class="form-control" />
+                        <span asp-validation-for="CreateCustomer.FirstName" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="CreateCustomer.LastName"></label>
+                        <input asp-for="CreateCustomer.LastName" class="form-control" />
+                        <span asp-validation-for="CreateCustomer.LastName" class="text-danger"></span>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label asp-for="CreateCustomer.Mobile"></label>
+                        <input asp-for="CreateCustomer.Mobile" class="form-control" />
+                        <span asp-validation-for="CreateCustomer.Mobile" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="CreateCustomer.Email"></label>
+                        <input asp-for="CreateCustomer.Email" class="form-control" />
+                        <span asp-validation-for="CreateCustomer.Email" class="text-danger"></span>
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <button class="btn btn-primary">Save</button>
+
+                    </div>
+
+                </form>
+
+            </div>
+            <div class="col-sm-3 col-12"></div>
+
+        </div>
+    </div>
+
+
+</div>
+
