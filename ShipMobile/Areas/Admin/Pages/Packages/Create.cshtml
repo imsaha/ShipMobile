@@ -1,0 +1,145 @@
+﻿@page "{Id?}"
+@model ShipMobile.Areas.Admin.Pages.Packages.CreateModel
+@{
+    ViewData["Title"] = "Add new";
+}
+
+
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+
+
+
+<div class="card">
+
+
+    <div class="card-header">
+        <ul class="nav nav-pills card-header-pills">
+            <li class="nav-item">
+                <a asp-page="Index" class="nav-link">Packages</a>
+            </li>
+
+            <li class="nav-item">
+                <a asp-page="Create" asp-route-Id="" class="nav-link active">
+                    <i class="fa fa-plus"></i>
+                    Add new
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-sm-3 col-12"></div>
+            <div class="col-sm-6 col-12">
+
+                <form method="post">
+
+                    <div class="form-group">
+                        <label asp-for="CreatePackage.CustomerId"></label>
+                        <select asp-for="CreatePackage.CustomerId" class="form-control custom-select" asp-items="@await Model.GetCustomersAsync()"></select>
+                        <span asp-validation-for="CreatePackage.CustomerId" class="text-danger"></span>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6 col-12">
+                            <div class="form-group">
+                                <div class="form-group">
+                                    <label asp-for="CreatePackage.PackageType"></label>
+                                    <select asp-for="CreatePackage.PackageType" class="form-control custom-select" asp-items="Html.GetEnumSelectList<PackageType>()"></select>
+                                    <span asp-validation-for="CreatePackage.PackageType" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-12">
+                            <div class="form-group">
+                                <label asp-for="CreatePackage.WeightInKg"></label>
+                                <div class="input-group">
+                                    <input asp-for="CreatePackage.WeightInKg" class="form-control" />
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">kg</span>
+                                    </div>
+                                </div>
+                                <span asp-validation-for="CreatePackage.WeightInKg" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr />
+
+                    <div class="form-group">
+                        <label asp-for="CreatePackage.ContactName"></label>
+                        <input asp-for="CreatePackage.ContactName" class="form-control" />
+                        <span asp-validation-for="CreatePackage.ContactName" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="CreatePackage.Mobile"></label>
+                        <input asp-for="CreatePackage.Mobile" class="form-control" />
+                        <span asp-validation-for="CreatePackage.Mobile" class="text-danger"></span>
+                    </div>
+
+
+                    <hr />
+
+                    <div class="form-group">
+                        <label asp-for="CreatePackage.Line1"></label>
+                        <input asp-for="CreatePackage.Line1" class="form-control" />
+                        <span asp-validation-for="CreatePackage.Line1" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="CreatePackage.Line2"></label>
+                        <input asp-for="CreatePackage.Line2" class="form-control" />
+                        <span asp-validation-for="CreatePackage.Line2" class="text-danger"></span>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6 col-12">
+                            <div class="form-group">
+                                <label asp-for="CreatePackage.City"></label>
+                                <input asp-for="CreatePackage.City" class="form-control" />
+                                <span asp-validation-for="CreatePackage.City" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-12">
+                            <div class="form-group">
+                                <label asp-for="CreatePackage.ZipCode"></label>
+                                <input asp-for="CreatePackage.ZipCode" class="form-control" />
+                                <span asp-validation-for="CreatePackage.ZipCode" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6 col-12">
+                            <div class="form-group">
+                                <label asp-for="CreatePackage.Country"></label>
+                                <input asp-for="CreatePackage.Country" class="form-control" />
+                                <span asp-validation-for="CreatePackage.Country" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-12">
+                            <div class="form-group">
+                                <label asp-for="CreatePackage.State"></label>
+                                <input asp-for="CreatePackage.State" class="form-control" />
+                                <span asp-validation-for="CreatePackage.State" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+
+                        <button class="btn btn-primary">Save</button>
+
+                    </div>
+
+                </form>
+
+            </div>
+            <div class="col-sm-3 col-12"></div>
+        </div>
+    </div>
+
+
+</div>
+

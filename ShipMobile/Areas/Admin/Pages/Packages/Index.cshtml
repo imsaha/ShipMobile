@@ -1,0 +1,211 @@
+﻿@page
+@model ShipMobile.Areas.Admin.Pages.Packages.IndexModel
+@{
+    ViewData["Title"] = "Packages";
+
+}
+
+
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+
+
+
+<div class="card">
+
+    <div class="card-header">
+        <ul class="nav nav-pills card-header-pills">
+            <li class="nav-item">
+                <a asp-page="Index" class="nav-link active">Packages</a>
+            </li>
+
+            <li class="nav-item">
+                <a asp-page="Create" asp-route-Id="" class="nav-link">
+                    <i class="fa fa-plus"></i>
+                    Add new
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="card-body p-0 table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Shipping Address</th>
+                    <th>Weight</th>
+                    <th>PackageType</th>
+                    <th>Associate</th>
+                    <th>Status</th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @if (Model.Packages != null && Model.Packages.Count > 0)
+                {
+                    foreach (var item in Model.Packages)
+                    {
+                        <tr>
+                            <td>
+                                <div>
+                                    <svg class="barcode"
+                                         jsbarcode-format="CODE39"
+                                         jsbarcode-value="@item.Barcode"
+                                         jsbarcode-width="1"
+                                         jsbarcode-height="100"
+                                         jsbarcode-textmargin="0"
+                                         jsbarcode-text="@item.Barcode"
+                                         jsbarcode-fontoptions="">
+                                    </svg>
+                                </div>
+                            </td>
+
+                            <td>
+                                <p>@item.ContactName</p>
+                                <p class="m-0">@($"{item.Line1}, {item.Line2}")</p>
+                                <p class="m-0">@($"{item.City}, {item.State}")</p>
+                                <p class="m-0">@($"{item.Country}, {item.ZipCode}")</p>
+                                <p class="m-0">@($"{item.Mobile}")</p>
+                            </td>
+
+                            <td>@($"{item.WeightInKg ?? default} kg")</td>
+                            <td>@($"{item.PackageType}")</td>
+                            <td>@($"{item.AssociateName}")</td>
+                            <td>
+                                <span>@($"{(item.Delivered==true?"Delivered":item.AssociateId>0?"Processing":"Created")}")</span>
+                                <span>@item.Note</span>
+                            </td>
+
+                            <td>
+                                <a asp-page="Create" asp-route-Id="@item.Id" class="btn btn-link">Edit</a> |
+
+                                @if (item.AssociateId > 0 && !(item.Delivered == true))
+                                {
+                                    <button data-target="#removeAssignModal" data-toggle="modal" class="btn btn-link" data-packageid="@item.Id" data-remove="true">Remove assignment</button>
+                                }
+                                else if (item.Delivered == false)
+                                {
+                                    <button data-target="#assignModal" data-toggle="modal" class="btn btn-link" data-packageid="@item.Id" data-remove="false">Assign to</button>
+                                }
+
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="5">
+                            <div class="text-center">
+                                No item exist, <a asp-page="Create" asp-route-Id="">Create new</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+    </div>
+
+</div>
+
+
+<div id="assignModal" class="modal fade" data-backdrop="static" data-keyboard="false" role="dialog">
+    <div class="modal-dialog">
+        <form method="post">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Assign to associate</h5>
+                    <button type="button" data-dismiss="modal" class="close">
+                        <span>&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+
+                    <input id="packageId" asp-for="AssignPackage.PackageId" hidden />
+                    <input id="assign" asp-for="AssignPackage.Assign" hidden />
+
+                    <div class="form-group">
+                        <label asp-for="AssignPackage.AssociateId">Associate</label>
+                        <select asp-for="AssignPackage.AssociateId" asp-items="@await Model.GetAssociatesAsync()" class="form-control custom-select"></select>
+                        <span asp-validation-for="AssignPackage.AssociateId" class="text-danger"></span>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Assign</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div id="removeAssignModal" class="modal fade" data-backdrop="static" data-keyboard="false" role="dialog">
+    <div class="modal-dialog">
+        <form method="post">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Are you sure?</h5>
+                    <button type="button" data-dismiss="modal" class="close">
+                        <span>&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+
+                    <input id="packageId" asp-for="AssignPackage.PackageId" hidden />
+                    <input id="assign" asp-for="AssignPackage.Assign" hidden />
+
+                    <div class="form-group">
+                        <p>Are you sure, you want to clear assignment from this package?</p>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-danger">Remove</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+@section Scripts{
+
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.0/dist/JsBarcode.all.min.js"></script>
+    <script>
+        JsBarcode(".barcode").init();
+        $('#assignModal').on('show.bs.modal', (event) => {
+            const button = $(event.relatedTarget);
+            const packageId = button.data('packageid');
+            const remove = button.data('remove');
+
+            // Update element value
+            const packageIdElem = $('#assignModal').find('#packageId');
+            const assignElem = $('#assignModal').find('#assign');
+            packageIdElem.val(packageId);
+            assignElem.attr('checked', remove === false);
+        });
+
+        $('#removeAssignModal').on('show.bs.modal', (event) => {
+            const button = $(event.relatedTarget);
+            const packageId = button.data('packageid');
+            const remove = button.data('remove');
+
+            // Update element value
+            const packageIdElem = $('#removeAssignModal').find('#packageId');
+            const assignElem = $('#removeAssignModal').find('#assign');
+            packageIdElem.val(packageId);
+            assignElem.attr('checked', remove === false);
+        });
+
+    </script>
+}
