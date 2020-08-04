@@ -98,6 +98,7 @@ namespace ShipMobile.Areas.Admin.Pages.Packages
                         package.AgentId = null;
                     }
 
+                    package.Delivered = null;
                     packageRepository.Update(package);
 
                     var result = await unitOfWork.CompleteAsync();

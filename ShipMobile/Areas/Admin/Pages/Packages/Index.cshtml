@@ -80,15 +80,17 @@
                             <td>
                                 <a asp-page="Create" asp-route-Id="@item.Id" class="btn btn-link">Edit</a> |
 
-                                @if (item.AssociateId > 0 && !(item.Delivered == true))
+                                @if (item.Delivered == null)
                                 {
-                                    <button data-target="#removeAssignModal" data-toggle="modal" class="btn btn-link" data-packageid="@item.Id" data-remove="true">Remove assignment</button>
+                                    if (item.AssociateId > 0)
+                                    {
+                                        <button data-target="#removeAssignModal" data-toggle="modal" class="btn btn-link" data-packageid="@item.Id" data-remove="true">Remove assignment</button>
+                                    }
+                                    else
+                                    {
+                                        <button data-target="#assignModal" data-toggle="modal" class="btn btn-link" data-packageid="@item.Id" data-remove="false">Assign to</button>
+                                    }
                                 }
-                                else if (item.Delivered == false)
-                                {
-                                    <button data-target="#assignModal" data-toggle="modal" class="btn btn-link" data-packageid="@item.Id" data-remove="false">Assign to</button>
-                                }
-
                             </td>
                         </tr>
                     }

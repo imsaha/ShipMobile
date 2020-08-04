@@ -103,7 +103,7 @@ namespace ShipMobile.Controllers
             if (result <= 0)
                 return BadRequest("Something unexpected happened.");
 
-            return Ok();
+            return Ok(true);
         }
     }
 
